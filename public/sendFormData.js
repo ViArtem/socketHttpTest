@@ -1,6 +1,7 @@
 window.addEventListener("load", () => {
   async function sendData() {
-    let inputValue = document.querySelector(".valueFormClass").value;
+    let input = document.querySelector(".valueFormClass");
+    let inputValue = input.value;
     console.log(inputValue);
     let userValue = {
       dataUser: inputValue,
@@ -14,6 +15,7 @@ window.addEventListener("load", () => {
       body: JSON.stringify(userValue),
     });
 
+    input.value = "";
     let result = await response.status;
     console.log(result);
   }
