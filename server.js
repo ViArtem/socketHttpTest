@@ -3,8 +3,9 @@ import { createRequire } from "node:module";
 import path from "path";
 import { router } from "./httpServ.js";
 import { routerGet } from "./getRouter.js";
-import { startSocket } from "./socketServ.js";
-import { socketReq } from "./httpServ.js";
+
+import { startHttpServer } from "./startHttp.js";
+import { startSocketServer } from "./startSocket.js";
 
 const app = express();
 const require = createRequire(import.meta.url);
@@ -23,6 +24,16 @@ app.use(router);
 app.use(routerGet);
 app.engine("html", require("ejs").renderFile);
 
-startSocket();
+//A function that starts a socket server. If it fails to start, the normal http server
+(function startServer() {
+  try {
+    let startSocketServerLet = startSocketServer();
+    if (startSocketServerLet == false) {
+      startHttpServer();
+    }
+  } catch (e) {
+    console.log(e);
+  }
+})();
 
 export { app };

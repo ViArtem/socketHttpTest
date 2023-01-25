@@ -1,14 +1,9 @@
-import { app } from "./server.js";
-import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
-function startSocket(params) {
-  //a server socket is created
-  const server = require("http").createServer(app);
-  let io = require("socket.io")(server);
-  //
-  let connections = [];
-  let datas = [];
-  //handles socket requests
+import { io } from "./startSocket.js";
+
+let connections = [];
+let datas = [];
+//handles socket requests
+function socketData() {
   io.sockets.on("connection", (socket) => {
     console.log("connected");
     connections.push(socket);
@@ -23,9 +18,5 @@ function startSocket(params) {
       console.log(datas);
     });
   });
-  server.listen(3000, async () => {
-    console.log("Started socket...");
-  });
 }
-
-export { startSocket };
+export { socketData };

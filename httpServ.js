@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { app } from "./server.js";
+
 const router = Router();
 const array = [];
 let socketReq = true;
